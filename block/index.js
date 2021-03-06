@@ -1,8 +1,11 @@
 
 import { registerBlockType } from "@wordpress/blocks";
-import { PrimaryTimePicker,TimeZoneChooser,ConvertedTime } from "./components";
+import { PrimaryTimePicker,TimeZoneChooser,ConvertedTimes } from "./components";
 import { InspectorControls } from "@wordpress/block-editor";
-import {useState } from "react";
+import { useState } from "react";
+
+  
+
 let attributes = {
     primaryTime: {
         type: 'string',
@@ -22,7 +25,7 @@ let attributes = {
 //<ConvertedTime date={primaryTime} timeZone={"America/Los_Angeles"} />
 const Edit = ({ attributes, setAttributes }) => {
     let [value, onChange] = useState();
-    let { primaryTime } = attributes;
+    let { primaryTime,timeZones } = attributes;
     let setPrimaryTime = (primaryTime) => setAttributes({ primaryTime });
     return (
         <div>
@@ -36,10 +39,16 @@ const Edit = ({ attributes, setAttributes }) => {
             <div>
                 {primaryTime ? (
                     <div>
-                        {primaryTime}
+                        <div>{primaryTime} - {timeZone}</div>
+                        {timeZones && 
+                            <ConvertedTimes
+                                primaryTime={primaryTime}
+                                timeZones={timeZones}
+                            />
+                        }
                     </div>
                 ) : (
-                        <div>Placeholder</div>
+                    <div>Choose Primary Time</div>
                 )}
             </div>
         </div>

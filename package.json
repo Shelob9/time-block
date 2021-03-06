@@ -26,6 +26,7 @@
 		"@wordpress/components": "@latest",
 		"@wordpress/element": "@latest",
 		"@wordpress/i18n": "@latest",
-		"@wordpress/scripts": "@latest"
+		"@wordpress/scripts": "@latest",
+		"timezone-support": "^2.0.2"
 	}
 }

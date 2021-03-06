@@ -1,6 +1,10 @@
 import { DateTimePicker,BaseControl,SelectControl } from '@wordpress/components';
 import { __experimentalGetSettings } from '@wordpress/date';
-import allTimeZones  from "./allTimeZones";
+import allTimeZones from "./allTimeZones";
+import  {
+    findTimeZone, getZonedTime, 
+} from 'timezone-support';
+
  //https://developer.wordpress.org/block-editor/components/date-time/
 export const PrimaryTimePicker = ({
    date,onChange 
@@ -30,10 +34,8 @@ export const PrimaryTimePicker = ({
 };
 
 export const TimeZoneChooser = ({value,onChange}) => {
-    
     return (
         <SelectControl
-            
             label={ 'Select TimeZone' }
             value={ value }
             onChange={ onChange}
@@ -42,15 +44,28 @@ export const TimeZoneChooser = ({value,onChange}) => {
     )
 }
 
-function convertTZ( date, timeZone) {
-    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone}));   
-}
 
-export const ConvertedTime = ({ date, timeZone }) => {
-    let time = convertTZ(date, timeZone);
+
+export const ConvertedTime = ({ primaryTime, timeZone }) => {
+    function formatTime (date, timeZone) {
+        const zoned = findTimeZone(timeZone);
+        const zonedTime = getZonedTime(new Date(date), zoned);
+        const { year, month, day, hours, minutes, seconds } = zonedTime
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    }
+
     return (
         <div>
-            <span>{time}</span> - <span>{timeZone}</span>
+            <span>{formatTime(primaryTime, timeZone)}</span> - <span>{timeZone}</span>
         </div>
     )
+}
+
+export const ConvertedTimes = ({ primaryTime, timeZones }) => {
+    return (
+        <div>
+            {timeZones.map(timeZone => (<ConvertedTime key={timeZone} primaryTime={primaryTime} timeZone={timeZone}/>))}
+        </div>
+    )
+
 }
