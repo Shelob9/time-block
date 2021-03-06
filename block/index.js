@@ -1,10 +1,8 @@
 
 import { registerBlockType } from "@wordpress/blocks";
-import { PrimaryTimePicker,TimeZoneChooser,ConvertedTimes } from "./components";
+import { PrimaryTimePicker, ConvertedTimes, ConvertedTime } from "./components";
+import { TimeZoneSettings } from "TimeZoneSettings";
 import { InspectorControls } from "@wordpress/block-editor";
-import { useState } from "react";
-
-  
 
 let attributes = {
     primaryTime: {
@@ -21,25 +19,34 @@ let attributes = {
         ]
     }
 }
-//https://stackoverflow.com/a/54127122/1469799
-//<ConvertedTime date={primaryTime} timeZone={"America/Los_Angeles"} />
+
+
+
+
 const Edit = ({ attributes, setAttributes }) => {
-    let [value, onChange] = useState();
     let { primaryTime,timeZones } = attributes;
-    let setPrimaryTime = (primaryTime) => setAttributes({ primaryTime });
+    let updatePrimaryTime = (primaryTime) => setAttributes({ primaryTime });
+    let updateTimeZones = (timeZones) => setAttributes({timeZones});
+
     return (
         <div>
             <InspectorControls>
                 <PrimaryTimePicker
                     date={primaryTime}
-                    onChange={setPrimaryTime}
+                    onChange={updatePrimaryTime}
                 />
-                <TimeZoneChooser {...{ value, onChange }}/>
+                <TimeZoneSettings
+                    timeZones={timeZones}
+                    updateTimeZones={updateTimeZones}
+                />
             </InspectorControls>
             <div>
                 {primaryTime ? (
                     <div>
-                        <div>{primaryTime}</div>
+                        <ConvertedTime
+                            primaryTime={primaryTime}
+                            timeZone={"America/New_York"}
+                        />
                         {timeZones && 
                             <ConvertedTimes
                                 primaryTime={primaryTime}
@@ -64,7 +71,13 @@ registerBlockType( 'josh/time-block', {
     },
     attributes,
     edit: Edit,
-    save: () => {
-        return <div> Hello in Save.</div>;
+    save: ({attributes}) => {
+        let { primaryTime, timeZones } = attributes;
+        return (
+            <ConvertedTimes
+                primaryTime={primaryTime}
+                timeZones={timeZones}
+            />
+        )
     },
 } );

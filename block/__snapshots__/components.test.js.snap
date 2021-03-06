@@ -8,7 +8,7 @@ exports[`ConvertTime 1`] = `
     </span>
      - 
     <span>
-      NewYork
+      New York
     </span>
   </div>
 </div>
@@ -23,7 +23,7 @@ exports[`ConvertedTimes 1`] = `
       </span>
        - 
       <span>
-        NewYork
+        New York
       </span>
     </div>
     <div>
@@ -32,7 +32,7 @@ exports[`ConvertedTimes 1`] = `
       </span>
        - 
       <span>
-        LosAngeles
+        Los Angeles
       </span>
     </div>
   </div>
