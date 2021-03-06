@@ -1,11 +1,12 @@
-import { DateTimePicker } from '@wordpress/components';
+import { DateTimePicker,BaseControl,SelectControl } from '@wordpress/components';
 import { __experimentalGetSettings } from '@wordpress/date';
-import { withState } from '@wordpress/compose';
+import allTimeZones  from "./allTimeZones";
  //https://developer.wordpress.org/block-editor/components/date-time/
-export const PrimaryTimePicker = withState( {
-    date: new Date(),
-} )( ( { date, setState } ) => {
+export const PrimaryTimePicker = ({
+   date,onChange 
+}) => {
     const settings = __experimentalGetSettings();
+
     const is12HourTime = /a(?!\\)/i.test(
         settings.formats.time
             .toLowerCase() // Test only the lower case a
@@ -14,10 +15,42 @@ export const PrimaryTimePicker = withState( {
     );
  
     return (
-        <DateTimePicker
-            currentDate={ date }
-            onChange={ ( date ) => setState( { date } ) }
-            is12Hour={ is12HourTime }
-        />
+        <BaseControl
+            id="primaryTime"
+            label="Primary Time"
+            help="Enter some text"
+        >
+            <DateTimePicker
+                currentDate={ date }
+                onChange={ ( date ) => onChange( date  ) }
+                is12Hour={ is12HourTime }
+            />
+        </BaseControl>
     );
-} );
+};
+
+export const TimeZoneChooser = ({value,onChange}) => {
+    
+    return (
+        <SelectControl
+            
+            label={ 'Select TimeZone' }
+            value={ value }
+            onChange={ onChange}
+            options={ allTimeZones }
+        />
+    )
+}
+
+function convertTZ( date, timeZone) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone}));   
+}
+
+export const ConvertedTime = ({ date, timeZone }) => {
+    let time = convertTZ(date, timeZone);
+    return (
+        <div>
+            <span>{time}</span> - <span>{timeZone}</span>
+        </div>
+    )
+}

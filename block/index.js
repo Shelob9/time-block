@@ -1,20 +1,49 @@
 
-import React from "react";
 import { registerBlockType } from "@wordpress/blocks";
-import { PrimaryTimePicker } from "./components";
-//Start axe in development.
-//@see https://www.npmjs.com/package/@axe-core/react
-if (process.env.NODE_ENV !== 'production') {
-    const axe = require('@axe-core/react');
-    axe(React, ReactDOM, 1000);
-}
-
+import { PrimaryTimePicker,TimeZoneChooser,ConvertedTime } from "./components";
+import { InspectorControls } from "@wordpress/block-editor";
+import {useState } from "react";
 let attributes = {
     primaryTime: {
         type: 'string',
         required: true,
         default: ''
+    },
+    timeZones: {
+        type: 'array',
+        required: false,
+        default: [
+            'America/New_York',
+            'America/Los_Angeles'
+        ]
     }
+}
+//https://stackoverflow.com/a/54127122/1469799
+//<ConvertedTime date={primaryTime} timeZone={"America/Los_Angeles"} />
+const Edit = ({ attributes, setAttributes }) => {
+    let [value, onChange] = useState();
+    let { primaryTime } = attributes;
+    let setPrimaryTime = (primaryTime) => setAttributes({ primaryTime });
+    return (
+        <div>
+            <InspectorControls>
+                <PrimaryTimePicker
+                    date={primaryTime}
+                    onChange={setPrimaryTime}
+                />
+                <TimeZoneChooser {...{ value, onChange }}/>
+            </InspectorControls>
+            <div>
+                {primaryTime ? (
+                    <div>
+                        {primaryTime}
+                    </div>
+                ) : (
+                        <div>Placeholder</div>
+                )}
+            </div>
+        </div>
+    )
 }
 registerBlockType( 'josh/time-block', {
     title: 'Time Block',
@@ -25,13 +54,7 @@ registerBlockType( 'josh/time-block', {
         html: false,
     },
     attributes,
-    edit: ({ attributes }) => {
-        const { primaryTime } = attributes;
-        return <div>
-            <PrimaryTimePicker />
-        </div>;
-    },
- 
+    edit: Edit,
     save: () => {
         return <div> Hello in Save.</div>;
     },
