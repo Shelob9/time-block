@@ -1,7 +1,6 @@
 
 import { registerBlockType } from "@wordpress/blocks";
-import { PrimaryTimePicker, ConvertedTimes, ConvertedTime } from "./components";
-import { TimeZoneSettings } from "TimeZoneSettings";
+import { TimeZoneSettings,PrimaryTimePicker, ConvertedTimes, ConvertedTime } from "./components";
 import { InspectorControls } from "@wordpress/block-editor";
 
 let attributes = {

@@ -3,7 +3,7 @@ import { render,act,fireEvent } from "@testing-library/react";
 import { useState } from 'react';
 
 describe('TimeZoneSettings', () => {
-    it.skip('matches snapshot', () => {
+    it('matches snapshot', () => {
         let timeZones = ["America/New_York", "America/Los_Angeles"];
         let { container } = render(
             <TimeZoneSettings
@@ -41,8 +41,10 @@ describe('TimeZoneSettings', () => {
         });
         selectors = container.querySelectorAll('.time-block-timezone-select select');
         expect(selectors.length).toEqual(3);
-        expect(selectors[0].value).toEqual('America/Chicago')
-        expect(selectors[1].value).toEqual(timeZones[1])
+        let values = [selectors[0].value, selectors[1].value];
+        expect(values.includes('America/Chicago')).toBeTruthy();
+        expect(values.includes("America/Los_Angeles")).toBeTruthy();
+        expect(values.includes("America/New_York")).toBeFalsy();
     });
 
 });

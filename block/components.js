@@ -5,7 +5,7 @@ import  {
     findTimeZone, getZonedTime, 
 } from 'timezone-support';
 import { Button } from '@wordpress/components';
-
+import { handleTimeZoneChange } from "./util";
 /**
  * Choose the primary time/date to convert from.
  * 
@@ -56,29 +56,7 @@ export const TimeZoneChooser = ({value,onChange}) => {
     )
 }
 
-/**
- * 
- * @see https://dev.to/shelob9/how-to-immutably-update-an-array-in-typescript-54nm
- */
- const removeTimeZone = (timeZone,timeZones) => {
-    const index = timeZones.findIndex((t) => timeZone === t);
-  if (-1 === index) {
-    return timeZones;
-  }
-  return [...timeZones.slice(0, index), ...timeZones.slice(index + 1)];
-}
 
-/**
- * 
- * @see https://dev.to/shelob9/how-to-immutably-update-an-array-in-typescript-54nm
- */
-const addTimeZone = (timeZone,timeZones) => {
-    const index = timeZones.findIndex((t => t === timeZone));
-    if (-1 === index) {
-      return [...timeZones, timeZone];
-    }
-    return [...timeZones.slice(0, index), timeZone, ...timeZones.slice(index + 1)]
-}
 export const TimeZoneSettings = ({timeZones,updateTimeZones}) => {
     return (
         <section>
@@ -87,10 +65,10 @@ export const TimeZoneSettings = ({timeZones,updateTimeZones}) => {
                     <div key={timeZone}>
                         <TimeZoneChooser
                             value={timeZone}
-                            onChange={(newValue) => {
-                                updateTimeZones(addTimeZone(newValue,
-                                    removeTimeZone(timeZone, timeZone)
-                                ))
+                            onChange={(addZone) => {
+                                updateTimeZones(
+                                    handleTimeZoneChange(timeZone, addZone, timeZones)
+                                )
                             }}
                         />
                          <Button
