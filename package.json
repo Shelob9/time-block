@@ -1,5 +1,5 @@
 {
-	"name": "pages",
+	"name": "time-block",
 	"private": true,
 	"version": "0.1.0",
 	"license": "GPL-2.0-or-later",
@@ -22,7 +22,7 @@
 	"dependencies": {
 		"@axe-core/react": "^4.0.0",
 		"@wordpress/block-editor": "@latest",
-		"@wordpress/blocks": "@latest",
+		"@wordpress/blocks": "^7.0.6",
 		"@wordpress/components": "@latest",
 		"@wordpress/element": "@latest",
 		"@wordpress/i18n": "@latest",

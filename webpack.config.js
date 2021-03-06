@@ -6,7 +6,7 @@ let entry = {};
 /**
  * Array of entry points
  */
-let entryPoints = ["admin"]
+let entryPoints = ["block"]
 
 entryPoints.forEach(
 	(entryPoint) => {
