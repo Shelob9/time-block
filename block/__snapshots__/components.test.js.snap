@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConvertTime 1`] = `
+<div>
+  <div>
+    <span>
+      2021-3-10 14:30:0
+    </span>
+     - 
+    <span>
+      NewYork
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ConvertedTimes 1`] = `
+<div>
+  <div>
+    <div>
+      <span>
+        2021-3-10 14:30:0
+      </span>
+       - 
+      <span>
+        NewYork
+      </span>
+    </div>
+    <div>
+      <span>
+        2021-3-10 11:30:0
+      </span>
+       - 
+      <span>
+        LosAngeles
+      </span>
+    </div>
+  </div>
+</div>
+`;

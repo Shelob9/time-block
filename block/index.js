@@ -39,7 +39,7 @@ const Edit = ({ attributes, setAttributes }) => {
             <div>
                 {primaryTime ? (
                     <div>
-                        <div>{primaryTime} - {timeZone}</div>
+                        <div>{primaryTime}</div>
                         {timeZones && 
                             <ConvertedTimes
                                 primaryTime={primaryTime}

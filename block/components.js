@@ -1,11 +1,16 @@
 import { DateTimePicker,BaseControl,SelectControl } from '@wordpress/components';
 import { __experimentalGetSettings } from '@wordpress/date';
 import allTimeZones from "./allTimeZones";
+import { useMemo } from "@wordpress/element";
 import  {
     findTimeZone, getZonedTime, 
 } from 'timezone-support';
 
- //https://developer.wordpress.org/block-editor/components/date-time/
+/**
+ * Choose the primary time/date to convert from.
+ * 
+ * @see https://developer.wordpress.org/block-editor/components/date-time/ 
+ */
 export const PrimaryTimePicker = ({
    date,onChange 
 }) => {
@@ -33,6 +38,9 @@ export const PrimaryTimePicker = ({
     );
 };
 
+/**
+ * Choose a timezone 
+ */
 export const TimeZoneChooser = ({value,onChange}) => {
     return (
         <SelectControl
@@ -45,27 +53,32 @@ export const TimeZoneChooser = ({value,onChange}) => {
 }
 
 
-
+/**
+ * Render a time in another timezone
+ */
 export const ConvertedTime = ({ primaryTime, timeZone }) => {
-    function formatTime (date, timeZone) {
+    const time = useMemo(() => {
         const zoned = findTimeZone(timeZone);
-        const zonedTime = getZonedTime(new Date(date), zoned);
+        const zonedTime = getZonedTime(new Date(primaryTime), zoned);
         const { year, month, day, hours, minutes, seconds } = zonedTime
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-    }
+    }, [primaryTime, timeZone]);
 
+    const zone = useMemo(() => `${timeZone.split('/')[1].replace( '_', '')}`,[timeZone]);
     return (
         <div>
-            <span>{formatTime(primaryTime, timeZone)}</span> - <span>{timeZone}</span>
+            <span>{time}</span> - <span>{zone}</span>
         </div>
     )
 }
 
+/**
+ * Render one time in multiple timezones
+ */
 export const ConvertedTimes = ({ primaryTime, timeZones }) => {
     return (
         <div>
             {timeZones.map(timeZone => (<ConvertedTime key={timeZone} primaryTime={primaryTime} timeZone={timeZone}/>))}
         </div>
     )
-
 }
