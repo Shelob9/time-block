@@ -1,13 +1,25 @@
 name: Build
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "*"
 
 jobs:
-  zip-files:
+  buildAndZip:
+    name: Build and Zip
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      # Build assets
+      - name: Install dependencies
+        run: yarn
+      - name: Test
+        run: yarn build
+      # Make a zip
       - uses: actions/checkout@v2
       - uses: papeloto/action-zip@v1
         with:
