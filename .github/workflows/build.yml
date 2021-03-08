@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  buildAndZip:
+    name: Build and Zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.MY_CUSTOM_TAG }}
+          name: ${{ env.TAG }}
+          body: >
+            "Knowledge Is A Rumor Until It Lives In The Body." - The OA
+          gzip: folders
+          files: >
+            build  
+            time-block.php
