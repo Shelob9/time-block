@@ -4,7 +4,7 @@ See [this tweet](https://twitter.com/Josh412/status/1368225886613471233).
 
 Generated with [wordpress-plugin](https://shelob9.github.io/wordpress-plugin/#basic).
 
-## Features
+This is a WordPress plugin with the following features:
 
 - A timezone block
   - Give it a time and some timezones.
@@ -16,11 +16,27 @@ Generated with [wordpress-plugin](https://shelob9.github.io/wordpress-plugin/#ba
 
 ### Install
 
+- Aquire a ZIP file of the plugin
+  - Recommended: [Download the latest version as a ZIP file](https://github.com/Shelob9/time-block/blob/main/time-block.zip?raw=true).
+  - Or: [build your own ZIP from sources](#Development).
+- Install
+  - In wp-admin, click on "Plugins".
+  - Click "Add New".
+  - Click "Upload Plugin" to reveal a file uploader.
+  - Upload plugin and follow on-screen instructions to activate.
+
 
 ### Block
 
+This is a block that displays one time, in multiple timezones.
+
+- In the block editor, insert a "Time Block".
+- Set the "Primary Time" in the block sidebar.
+- Below that setting, add one or more timezones.
 
 ### Converter
+
+This feature replaces times listed on the page with time listed in brower's local time. This feature is in development and a bit of a pain to use.
 
 There is no UI for these settings (yet.) You can enable this features with the `time_block_converter` filter. Return an array with:
 
@@ -39,7 +55,7 @@ add_filter('time_block_converter', function () {
 });
 ```
 
-## Development Quick Start
+## Development
 
 - Git clone:
   - `git clone git@github.com:Shelob9/time-block.git`
