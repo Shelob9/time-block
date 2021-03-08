@@ -16,6 +16,7 @@ Generated with [wordpress-plugin](https://shelob9.github.io/wordpress-plugin/#ba
 
 ### Install
 
+
 ### Block
 
 
@@ -53,6 +54,8 @@ add_filter('time_block_converter', function () {
 - Test all files once
   - `yarn test`
   - `yarn test --ci`
+- Create an installable Zip file.
+  - `yarn zip`
 
 ## Local Development
 
