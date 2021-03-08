@@ -32,9 +32,24 @@ function time_block()
     ));
 }
 
-add_action('wp_enqueue_scripts', function () {
+add_action('wp_enqueue_scripts', 'time_block_maybe_load_converter');
+
+/**
+ * Load JavaScript for converter, if configured.
+ */
+function time_block_maybe_load_converter()
+{
+    $args = apply_filters('time_block_converter', []);
+    if (empty($args)) {
+        return;
+    }
+    $args = [
+        'seperator' => $args['seperator'] ? esc_attr($args['seperator']) : '',
+        'query' => $args['query'] ? esc_attr($args['query']) : '',
+    ];
     wp_enqueue_script('time-block-converter');
-});
+    wp_localize_script('time-block-converter', 'TIMEBLOCK', $args);
+}
 
 /**
  * Register an asset
