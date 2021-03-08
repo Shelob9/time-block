@@ -3,8 +3,11 @@ import  {
 } from 'timezone-support';
 
 jQuery(function ($) {
-    const seperator = 'at';
-    const nodes = document.querySelectorAll('.wpem-event-date-time-text');
+    if ('object' !== typeof window.TIMEBLOCK || ! TIMEBLOCK.query) {
+        return;
+    }
+    const seperator = TIMEBLOCK.seperator ? TIMEBLOCK.seperator : '';
+    const nodes = document.querySelectorAll(TIMEBLOCK.query);
 
     const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const timeZoneString = browserTimeZone.replace('_', ' ',).replace('/', '/ ');

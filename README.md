@@ -30,12 +30,12 @@ There is no UI for these settings (yet.) You can enable this features with the `
 You would add something like this to your theme's function.php or a plugin.
 
 ```php
- add_filter('time_block_converter', function () {
-        return [
-            'seperator' => 'at',
-            'query' => '.wpem-event-date-time-text'
-        ];
-    });
+add_filter('time_block_converter', function () {
+    return [
+        'seperator' => 'at',
+        'query' => '.wpem-event-date-time-text'
+    ];
+});
 ```
 
 ## Development Quick Start

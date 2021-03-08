@@ -30,6 +30,12 @@ function time_block()
     register_block_type('josh/time-block', array(
         'editor_script' => 'time-block-block',
     ));
+    add_filter('time_block_converter', function () {
+        return [
+            'seperator' => 'at',
+            'query' => '.wpem-event-date-time-text'
+        ];
+    });
 }
 
 add_action('wp_enqueue_scripts', 'time_block_maybe_load_converter');
