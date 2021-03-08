@@ -6,7 +6,7 @@ let entry = {};
 /**
  * Array of entry points
  */
-let entryPoints = ["block"]
+let entryPoints = ["block","converter"]
 
 entryPoints.forEach(
 	(entryPoint) => {
